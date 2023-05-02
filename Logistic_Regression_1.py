@@ -1,4 +1,4 @@
-#%%
+#%% 導入模主
 import numpy as np
 import seaborn as sns
 import pandas as pd
@@ -42,7 +42,7 @@ ax.set_title('Sigmoid Function')
 ax.grid()
 plt.show()
 # %%
-le=LabelEncoder()
+le=LabelEncoder()#
 y_encoded=le.fit_transform(y)
 y_encoded
 # %%
@@ -65,19 +65,21 @@ def sigmoid_new(x1,x2):
 
 
 # %%
-X_train.head(6)
+test=X_train
+test_list=test.values.tolist()
+test_list=[[float(x) for x in row] for row in test_list]
+print(test_list)
 #%%
 Y_train[0:6]
 #%%
 outFunYList=[]
 outSigmoidYList=[]
-test_list=[[4.1,1.3],
-           [3.9,1.1],
-           [3.7,1.0]]
+
+print(test_list)
 print('線性函數:f(x)結果','接近1表示Sentosa,接近0表示Versicolor')
 for i in test_list:
-    outFunYList.append(fun(i[0],i[1]))
-    outSigmoidYList.append(sigmoid_new(i[0],i[1]))
+    outFunYList.append(fun(*i))
+    outSigmoidYList.append(sigmoid_new(*i))
     print(fun(*i),"\t",sigmoid_new(*i))
 
 # %%
