@@ -50,3 +50,34 @@ X_train, X_test, Y_train, Y_test = train_test_split(x, y_encoded, test_size=0.2)
 #%%
 logR=LogisticRegression(random_state=0)
 logR.get_params()
+#%%
+logR.fit(X_train,Y_train)
+logR.score(X_train,Y_train)
+#%%
+logR.coef_
+#%%
+logR.intercept_
+#%%
+def fun(x1,x2):
+    return 2.47337199*x1+1.03289823*x2-7.44987506
+def sigmoid_new(x1,x2):
+    return 1/(1+np.exp(-(fun(x1,x2))))
+
+
+# %%
+X_train.head(6)
+#%%
+Y_train[0:6]
+#%%
+outFunYList=[]
+outSigmoidYList=[]
+test_list=[[4.1,1.3],
+           [3.9,1.1],
+           [3.7,1.0]]
+print('線性函數:f(x)結果','接近1表示Sentosa,接近0表示Versicolor')
+for i in test_list:
+    outFunYList.append(fun(i[0],i[1]))
+    outSigmoidYList.append(sigmoid_new(i[0],i[1]))
+    print(fun(*i),"\t",sigmoid_new(*i))
+
+# %%
