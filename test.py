@@ -1,11 +1,79 @@
+#%% 導入模主
+import numpy as np
+import seaborn as sns
 import pandas as pd
+import csv
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+#%%
+with open('C:/Users/User/OneDrive/桌面/Github/math/iris_2.csv',newline='') as csvfile:
+    irisData=csv.reader(csvfile)
+    irisDF=pd.DataFrame(irisData)
+csvfile.close()
+irisDF.columns=['sepal length', 'sepal width',
+                'petal length','petal width','class']
 
-# 创建一个 DataFrame 对象
-df = pd.DataFrame({'A': ['1', '2', '3'], 'B': ['4', '5', '6']})
+print(irisDF)
+#%%    
+g=sns.scatterplot(x='sepal length', y='sepal width', hue='class', data=irisDF)
+g.figure.axes[0].invert_yaxis()
+plt.show()
+# %%
+x=irisDF[['petal length','petal width']]
+y=irisDF['class']
+x
+# %%
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
 
-# 使用 values.tolist() 方法将 DataFrame 转换为嵌套列表
-list_data = df.values.tolist()
-print(df)
-print(list_data)
-list_data=[list(map(int,i)) for i in list_data]
-print(list_data)
+x_arr=np.linspace(-10,10,100)
+y_arr=np.array(list(map(sigmoid,x_arr)))
+# %%
+
+fig,ax=plt.subplots(figsize=(10,6))
+ax.plot(x_arr,y_arr)
+ax.set_xticks([-10,0,10],['$-\infty$','0','$\infty$'])
+ax.set_yticks([0,0.5,1],['0','0.5','1'])
+ax.set_xlabel('$x$')
+ax.set_ylabel('$Sigmoid(x)$')
+ax.set_title('Sigmoid Function')
+ax.grid()
+plt.show()
+# %%
+le=LabelEncoder()#
+y_encoded=le.fit_transform(y)
+y_encoded
+# %%
+X_train, X_test, Y_train, Y_test = train_test_split(x, y_encoded, test_size=0.2)
+#%%
+logR=LogisticRegression(random_state=0)
+logR.get_params()
+#%%
+logR.fit(X_train,Y_train)
+logR.score(X_train,Y_train)
+#%%
+logR.coef_
+#%%
+logR.intercept_
+#%%
+def fun(x1,x2):
+    return 2.47337199*x1+1.03289823*x2-7.44987506
+def sigmoid_new(x1,x2):
+    return 1/(1+np.exp(-(fun(x1,x2))))
+
+
+# %%
+test=X_train
+test_list=test.values.tolist()
+test_list=[[float(x) for x in row] for row in test_list]
+print(test_list)
+#%%
+Y_train[0:6]
+#%%
+
+print('線性函數:f(x)結果','接近1表示Sentosa,接近0表示Versicolor')
+for i in test_list:
+    print(fun(*i),sigmoid_new(*i))
+# %%

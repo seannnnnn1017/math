@@ -74,12 +74,13 @@ Y_train[0:6]
 #%%
 outFunYList=[]
 outSigmoidYList=[]
-
+sigmoid_num=[]
 print(test_list)
 print('線性函數:f(x)結果','接近1表示Sentosa,接近0表示Versicolor')
 for i in test_list:
     outFunYList.append(fun(*i))
     outSigmoidYList.append(sigmoid_new(*i))
-    print(fun(*i),"\t",sigmoid_new(*i))
-
+    sigmoid_num.append(sigmoid_new(*i))
+plt.scatter(x=outFunYList,y=sigmoid_num)
+plt.show()
 # %%
